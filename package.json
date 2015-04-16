@@ -1,0 +1,12 @@
+{
+  "name": "kartsi",
+  "version": "0.0.1",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.12.3",
+     "body-parser": "~1.0.1"
+  },
+  "engines": {
+    "node": "0.12.1"
+  }
+}
