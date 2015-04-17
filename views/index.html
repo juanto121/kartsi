@@ -1,0 +1,31 @@
+<html>
+<head>
+	
+	<title>Kartsi - server</title>
+</head>
+<body>
+	<h1>Players</h1>
+	<ul id="players"></ul>
+	<h1>Karts</h1>
+	<ul id="karts"></ul>
+
+</body>
+<link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="style.css">
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.0.0.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
+
+<script type="text/javascript">
+	$.get("./kartsi/players",function(data, status){
+		var template = "{{#players}}<ul><li>{{_name}} {{_id}}</li></ul>{{/players}}";
+		var html = Mustache.to_html(template, data);
+		$('#players').html(html);
+	});
+
+	$.get("./kartsi/karts",function(data, status){
+		var template = "{{#karts}}<ul><li>{{_available}} {{_bt_mac}}</ul>{{/karts}}";
+		var html = Mustache.to_html(template, data);
+		$("#karts").html(html);
+	})
+</script>
+</html>
