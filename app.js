@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 var the_race = new Race();
 
 app.use(express.static( __dirname +'/views'));
-
+app.set('port', (process.env.PORT || 80));
 
 var router = express.Router();
 
@@ -92,4 +92,4 @@ router.route('/karts/:kart_id')
 
 app.use('/kartsi', router);
 
-app.listen(80);
+app.listen(app.get('port'));
