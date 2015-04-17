@@ -23,7 +23,7 @@
 	});
 
 	$.get("./kartsi/karts",function(data, status){
-		var template = "{{#karts}}<ul><li>{{_available}} {{_bt_mac}}</ul>{{/karts}}";
+		var template = '{{#karts}}<ul><li class="{{_current_power}}">{{_available}} {{_bt_mac}} {{_current_power}}</ul>{{/karts}}';
 		var html = Mustache.to_html(template, data);
 		$("#karts").html(html);
 	})
