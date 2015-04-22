@@ -30,6 +30,7 @@ router.route('/players')
 	the_race.add_player(a_player);
 
 	console.log("Adding a player");
+	res.statusCode = 201;
 	res.send(a_player._id);
 })
 .get(function(req, res){
@@ -62,9 +63,9 @@ router.route('/karts')
 	a_kart.set_mac(req.body.mac);
 	
 	the_race.add_kart(a_kart);
-
+	res.statusCode = 201;
 	res.send("Adding kart with mac " + a_kart._bt_mac);
-
+	console.log("Kart with mac: " + a_kart._bt_mac + "was added");
 })
 .get(function(req, res){
 	res.send({karts:the_race._karts});
@@ -77,8 +78,8 @@ router.route('/karts/:kart_id')
 	var kart_mac = req.params.kart_id;
 
 	the_race.find_kart(kart_mac,function(found_kart){
-		res.send("Fetched kart " + found_kart._bt_mac);
-		console.log(found_kart);
+		res.send(found_kart._current_power);
+		console.log(found_kart._current_power);
 	});
 
 })
