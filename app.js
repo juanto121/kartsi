@@ -76,10 +76,10 @@ router.route('/karts/:kart_id')
 
 .get(function(req, res){
 	var kart_mac = req.params.kart_id;
-
+	console.log(" get: "+kart_mac);
 	the_race.find_kart(kart_mac,function(found_kart){
-		res.send(found_kart._current_power);
 		console.log(found_kart._current_power);
+		res.send(found_kart._current_power);
 	});
 
 })

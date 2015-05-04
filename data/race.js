@@ -23,6 +23,7 @@ Race.prototype.find_kart = function(mac, cb) {
 	for (var i = 0; i < this._karts.length; i++) {
 		if(this._karts[i]._bt_mac == mac){
 			cb(this._karts[i]);
+			break;
 		}
 	};
 };
