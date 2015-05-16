@@ -1,6 +1,7 @@
 Kartsi Server
 =============
 Este es el servidor que coordina varias de las tareas de kartsi.
+
 Flujo de mensajes
 -----------------
 EL servidor hace 3 cosas básicas:
@@ -21,6 +22,7 @@ Los request para agregar kart y aplicar power-up provocan que los sockets conect
 
 
 La informacion de la carrera se obtiene accediendo desde un navegador a `/kartsi/gamemode/sprint`.
+
 Uso básico
 ----------
 Para usar el servidor se debe tener instalado [nodejs](https://nodejs.org/). Hay que tener en cuenta que la version de windows y raspbian difieren y configuración extra puede ser necesaria para ejecutarlo en cada sistema operativo. Al instalar node, tambien se instalara la herramienta [npm](https://www.npmjs.com/).
