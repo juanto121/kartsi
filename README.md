@@ -21,6 +21,7 @@ Para mejor entendimiento de como se configuran las peticiones en el servidor ver
 ###Información de la carrera
 Los request para agregar kart y aplicar power-up provocan que los sockets conectados al servidor reciban un mensaje. Este mecanismo es usado para actualizar la informacion de la carrera en una pantalla o en cualquier navegador que tenga acceso al servidor.
 
+Se utiliza el sistema de templates [Mustache](https://mustache.github.io/) para agregar datos al DOM.
 
 La informacion de la carrera se obtiene accediendo desde un navegador a `/kartsi/gamemode/sprint`.
 
