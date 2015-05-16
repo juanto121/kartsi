@@ -5,6 +5,7 @@ Este es el servidor que coordina varias de las tareas de kartsi.
 Flujo de mensajes
 -----------------
 EL servidor hace 3 cosas básicas:
+
 - Gestión de karts.
 - Coordinar power-ups.
 - Mostrar informacion de la carrera.
