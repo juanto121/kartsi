@@ -1,0 +1,28 @@
+body{
+	font-family: 'Ruda', sans-serif;
+}
+.rankHeading{
+	text-align: center;
+}
+
+.kart{
+	background-color: #4CAF50;
+	text-align: center;
+	margin:10px;
+}
+
+.kartName{
+	font-size: 50px;
+}
+
+.kartStatus{
+	font-size: 50px;
+}
+
+.kartScore{
+	font-size: 50px;
+}
+
+.winner{
+	
+}

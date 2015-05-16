@@ -1,0 +1,46 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Sprint Mode</title>
+</head>
+<link rel="stylesheet" type="text/css" href="/css/gridism.css">
+<link rel="stylesheet" type="text/css" href="/css/sprint.style.css">
+<link href='http://fonts.googleapis.com/css?family=Ruda:400,700' rel='stylesheet' type='text/css'>
+
+<body>
+	<div id="raceTime"></div>
+	<div id="rank">
+		<div class="rankHeading grid">
+			<div class="kartName unit one-third">Name</div>
+			<div class="kartStatus unit one-third">Status</div>
+			<div class="kartScore unit one-third">Score</div>
+		</div>
+		<div id="raceRank"></div>
+	</div>
+</body>
+
+<script src="/js/sprint.class.js"></script>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/mustache.min.js"></script>
+<script src="/lib/socket.io.js"></script>
+<script type="text/javascript">
+	var sprint = new Sprint();
+	var socket = io.connect('http://localhost');
+
+	socket.on('tag-found', function (data){
+		sprint.updateGameRank(data);
+	});
+	socket.on('add-kart', function (data){
+		sprint.addKart(data);		
+	});
+</script>
+
+<script id="kartTemplate" type="text/template">
+	<div id="{{kartMac}}" class="kart grid">
+		<div class="kartName unit one-third">{{kartName}}</div>
+		<div class="kartStatus unit one-third">{{kartStatus}}</div>
+		<div class="kartScore unit unit one-third">{{kartScore}}</div>
+	</div>
+</script>
+
+</html>

@@ -1,6 +1,7 @@
 var Race = function(){
 	this._players = [];
 	this._karts = [];
+	this._time = 0;
 }
 
 
@@ -29,12 +30,16 @@ Race.prototype.find_kart = function(mac, cb) {
 };
 
 Race.prototype.activate_power = function(mac, cb) {
+	var kart;
 	for (var i = 0; i < this._karts.length; i++) {
 		if(this._karts[i]._bt_mac !== mac ){
 			this._karts[i].set_power("stop");
+		}else{
+			kart = this._karts[i];
+			this._karts[i].score += 50;
 		}
 	};
-	cb();
+	cb(kart);
 };
 
 module.exports = Race;

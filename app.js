@@ -4,20 +4,39 @@ var express = require('express'),
 	Race = require('./data/race'),
 	Player = require('./data/player'),
 	Kart = require('./data/kart'),
-	bodyParser = require('body-parser');
+	bodyParser = require('body-parser'),
+	io = require('socket.io')(server);
+
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+app.use(express.static( __dirname +'/public'));
+app.use( function(req, res, next){
+	req.io = io;
+	next();
+});
+
 
 var the_race = new Race();
 
-app.use(express.static( __dirname +'/views'));
+
 app.set('port', (process.env.PORT || 80));
+server.listen(app.get('port'));
 
 var router = express.Router();
 
 router.get('/',function(req, res){
 	res.sendFile(__dirname + '/views/index.html');
+});
+
+router.route('/gamemode/sprint')
+.get( function (req, res){
+	res.sendFile(__dirname + '/views/sprint.html');
+});
+
+router.route('/gamemode/timetrial')
+.get( function (req, res){
+	res.sendFile(__dirname + '/views/timetrial.html');
 });
 
 router.route('/players')
@@ -31,13 +50,13 @@ router.route('/players')
 
 	console.log("Adding a player");
 	res.statusCode = 201;
+	
 	res.send(a_player._id);
 })
 .get(function(req, res){
-	console.log("Getting all players");
+	console.log("+");
 	res.send({players:the_race._players});
-})
-;
+});
 
 router.route('/players/:player_id')
 
@@ -61,19 +80,19 @@ router.route('/karts')
 .post(function(req, res){
 	var a_kart = new Kart();
 	a_kart.set_mac(req.body.mac);
-	
 	the_race.add_kart(a_kart);
+	req.io.sockets.emit('add-kart',{kart:a_kart});
+
 	res.statusCode = 201;
 	res.send("Adding kart with mac " + a_kart._bt_mac);
 	console.log("Kart with mac: " + a_kart._bt_mac + "was added");
 })
-.get(function(req, res){
-	res.send({karts:the_race._karts});
+.get(function(req, res)
+{	res.send({karts:the_race._karts});
 })
 
-//id es la mac, no es necesario relacionarlo con usuario
-router.route('/karts/:kart_id')
 
+router.route('/karts/:kart_id')
 .get(function(req, res){
 	var kart_mac = req.params.kart_id;
 	console.log(" get: "+kart_mac);
@@ -86,11 +105,11 @@ router.route('/karts/:kart_id')
 .put(function(req, res){
  var kart_mac = req.params.kart_id;
  console.log(kart_mac + " finds a tag ");
- the_race.activate_power(kart_mac,function(){
+ the_race.activate_power(kart_mac, function(kart){
+ 	req.io.sockets.emit('tag-found',{karts:the_race._karts});
  	res.sendStatus(200);
  });
-})
+});
 
 app.use('/kartsi', router);
 
-app.listen(app.get('port'));
