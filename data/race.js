@@ -1,9 +1,18 @@
 var Race = function(){
 	this._players = [];
 	this._karts = [];
-	this._time = 0;
-}
+};
 
+Race.prototype.start_race = function(){
+	var len = this._karts.length;
+	while(len--){
+		this._karts[len].reset_power();
+	}
+};
+
+Race.prototype.reset_race = function(){
+	this._karts = [];
+};
 
 Race.prototype.add_kart = function(kart) {
 	this._karts.push(kart);
@@ -17,7 +26,7 @@ Race.prototype.find_player = function(player_id, cb) {
 	for (var i = 0; i < this._players.length; i++) {
 		if(this._players[i]._id == player_id)
 			cb(this._players[i]);
-	};
+	}
 };
 
 Race.prototype.find_kart = function(mac, cb) {
@@ -26,7 +35,7 @@ Race.prototype.find_kart = function(mac, cb) {
 			cb(this._karts[i]);
 			break;
 		}
-	};
+	}
 };
 
 Race.prototype.activate_power = function(mac, cb) {
@@ -38,7 +47,7 @@ Race.prototype.activate_power = function(mac, cb) {
 			kart = this._karts[i];
 			this._karts[i].score += 50;
 		}
-	};
+	}
 	cb(kart);
 };
 

@@ -1,9 +1,9 @@
 var Kart = function(){
 	this._bt_mac = "";
 	this._available = true;
-	this._current_power = "none";
+	this._current_power = "stop";
 	this.score = 0;
-}
+};
 
 Kart.prototype.set_mac = function(mac) {
 	this._bt_mac = mac;

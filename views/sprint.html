@@ -8,15 +8,42 @@
 <link href='http://fonts.googleapis.com/css?family=Ruda:400,700' rel='stylesheet' type='text/css'>
 
 <body>
-	<div id="raceTime"></div>
 	<div id="rank">
 		<div class="rankHeading grid">
 			<div class="kartName unit one-third">Name</div>
 			<div class="kartStatus unit one-third">Status</div>
-			<div class="kartScore unit one-third">Score</div>
+			<div class="kartName unit one-third">Score</div>
 		</div>
 		<div id="raceRank"></div>
+
 	</div>
+
+	<div id="winnerDisplay" class="hidden">
+		Winning!
+	</div>
+
+	<footer id="timeContainer" class="time">
+		
+		<div class="grid">
+			<div class="unit one-third">
+				<div id="readyTime" class="timebar"></div>
+			</div>
+			<div  class="unit two-thirds">
+				<div id="raceTime" class="timebar"></div>
+			</div>
+		</div>
+
+		<div class="grid">
+			<div id="timeToStart" class="unit one-third">
+				Get ready
+			</div>
+			<div id="timeOfRace" class="unit two-thirds">
+				Time Left
+			</div>
+		</div>
+	</footer>
+
+
 </body>
 
 <script src="/js/sprint.class.js"></script>
@@ -34,6 +61,7 @@
 		sprint.addKart(data);		
 	});
 </script>
+
 
 <script id="kartTemplate" type="text/template">
 	<div id="{{kartMac}}" class="kart grid">

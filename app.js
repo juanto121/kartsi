@@ -29,6 +29,20 @@ router.get('/',function(req, res){
 	res.sendFile(__dirname + '/views/index.html');
 });
 
+router.route("/race/start")
+.get( function (req, res){
+	the_race.start_race();
+	console.log("Race Started");
+	res.sendStatus(200);
+});
+
+router.route("/race/reset")
+.get( function (req, res){
+	the_race.reset_race();
+	console.log("Race Resets");
+	res.sendStatus(200);
+});
+
 router.route('/gamemode/sprint')
 .get( function (req, res){
 	res.sendFile(__dirname + '/views/sprint.html');
@@ -64,9 +78,9 @@ router.route('/players/:player_id')
 	var player_id = req.params.player_id;
 	console.log('Request for player: ' + player_id);
 	the_race.find_player(player_id,function(found_player){
-		res.send("A fetched player " + found_player);	
+		res.send("A fetched player " + found_player);
 		console.log(found_player);
-	})
+	});
 })
 .put(function(req, res){
 	the_race.find_player(req.params.player_id, function(found_player){
@@ -89,7 +103,7 @@ router.route('/karts')
 })
 .get(function(req, res)
 {	res.send({karts:the_race._karts});
-})
+});
 
 
 router.route('/karts/:kart_id')
@@ -106,10 +120,9 @@ router.route('/karts/:kart_id')
  var kart_mac = req.params.kart_id;
  console.log(kart_mac + " finds a tag ");
  the_race.activate_power(kart_mac, function(kart){
- 	req.io.sockets.emit('tag-found',{karts:the_race._karts});
- 	res.sendStatus(200);
+ req.io.sockets.emit('tag-found',{karts:the_race._karts});
+ res.sendStatus(200);
  });
 });
 
 app.use('/kartsi', router);
-
