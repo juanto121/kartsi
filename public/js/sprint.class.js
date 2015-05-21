@@ -16,10 +16,10 @@ var Sprint = (function(){
 		*/
 
 		//Seconds of race
-		this.raceTime = 20;
+		this.raceTime = 10;
 		this.timerRace = this.raceTime;
 		//Seconds till race start
-		this.readyTime = 20;
+		this.readyTime = 10;
 		this.timerToStart = this.readyTime;
 
 		this.kartTemplate = $("#kartTemplate");
@@ -31,8 +31,9 @@ var Sprint = (function(){
 		this.raceTimeBar = $("#raceTime");
 
 		this.winnerDisplay = $("#winnerDisplay");
+		this.winnerTemplate = $("#winnerTemplate");
 
-		this.raceTick = {};
+		this.raceTick = null;
 
 		this.raceStarted = false;
 	};
@@ -44,16 +45,16 @@ var Sprint = (function(){
 			
 			if(!this.raceStarted){
 				$.ajax({
-		    		url : "http://localhost/kartsi/race/start",
-		    		type: 'get',
-				    success: this.setRaceStart.bind(this)
+					url : "http://localhost/kartsi/race/start",
+					type: 'get',
+					success: this.setRaceStart.bind(this)
 				});
 			}
 
 			this.timerRace--;
 
 			if(this.timerRace<0){
-				window.clearInterval(this.raceTick);
+				
 				this.showWinner();
 			}else{
 				this.counterRace.html(this.timerRace);
@@ -61,7 +62,7 @@ var Sprint = (function(){
 			}
 
 		}else{
-			animateTimebar(this.readyTimeBar, this.readyTime, this.timerToStart)
+			animateTimebar(this.readyTimeBar, this.readyTime, this.timerToStart);
 			this.counterStart.html(this.timerToStart);
 		}
 
@@ -82,23 +83,35 @@ var Sprint = (function(){
 	}
 
 	sprint.showWinner = function() {
-		var winner = this.karts[0];
+		window.clearInterval(this.raceTick);
+		var winner = this.karts[this.karts.length-1];
+
+		var winnerData = {
+			kartName: winner._bt_mac,
+			kartScore: winner.score
+		};
+
+		var winnerKart = Mustache.to_html(this.winnerTemplate.html(), winnerData);
+		this.winnerDisplay.append(winnerKart);
+		this.kartContainer.empty();
+		$(".rankHeading").empty();
+
 		this.winnerDisplay.toggleClass("hidden");
 		this.resetSprint();
 		setTimeout(function(){
 			location.reload();
-		},10000);
+		},15000);
 
 	};
 
 	sprint.resetSprint = function(){
 		if(this.raceStarted){
 			$.ajax({
-	    		url : "http://localhost/kartsi/race/reset",
-	    		type: 'get',
-			    success: function(result){
-	        		console.log("Race resets in 10 Secs");
-	    		}
+				url : "http://localhost/kartsi/race/reset",
+				type: 'get',
+				success: function(result){
+					console.log("Race resets in 10 Secs");
+				}
 			});
 		}
 	};
@@ -116,7 +129,8 @@ var Sprint = (function(){
 
 		var kartBox = Mustache.to_html(this.kartTemplate.html(), newKart);
 		this.kartContainer.append(kartBox);
-		this.raceTick = setInterval(this.tick.bind(this) , 1000);
+		if(this.raceTick == null)
+			this.raceTick = setInterval(this.tick.bind(this) , 1000);
 	};
 
 	sprint.updateGameRank = function (state) {
@@ -130,9 +144,11 @@ var Sprint = (function(){
 		console.log(this.karts);
 
 		var len = this.karts.length;
+		var oLen = len;
 		while(len--){
 			var kart = this.karts[len];
 
+			kart.kartPos = -(len-oLen);
 			kart.kartMac = kart._bt_mac;
 			kart.kartName = kart._bt_mac;
 			kart.kartStatus = kart._current_power;

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<meta name="viewport" content="width=device-width,initial-scale=1">
@@ -18,8 +19,7 @@
 
 	</div>
 
-	<div id="winnerDisplay" class="hidden">
-		Winning!
+	<div id="winnerDisplay" class="hidden circle">
 	</div>
 
 	<footer id="timeContainer" class="time">
@@ -65,10 +65,23 @@
 
 <script id="kartTemplate" type="text/template">
 	<div id="{{kartMac}}" class="kart grid">
-		<div class="kartName unit one-third">{{kartName}}</div>
+		<div class="kartName unit one-third">{{kartPos}}.{{kartName}}</div>
 		<div class="kartStatus unit one-third">{{kartStatus}}</div>
 		<div class="kartScore unit unit one-third">{{kartScore}}</div>
 	</div>
+</script>
+
+<script id="winnerTemplate" type="text/template">
+	
+		<div class="winnerName">
+			<div class="bigOne">
+				<img src="/img/laurel.png" alt="1">
+			</div>		
+			<div>{{kartName}}</div>
+			<br>
+			<div>{{kartScore}}</div>
+		</div>
+	
 </script>
 
 </html>
