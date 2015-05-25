@@ -2,6 +2,9 @@
   "name": "kartsi",
   "version": "0.0.1",
   "main": "app.js",
+  "scripts":{
+      "test": "karma start --single-run"
+    },
   "dependencies": {
     "body-parser": "~1.0.1",
     "express": "^4.12.3",
@@ -10,5 +13,11 @@
   },
   "engines": {
     "node": "0.12.1"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.12.32",
+    "karma-chrome-launcher": "^0.1.12",
+    "karma-jasmine": "^0.3.5"
   }
 }

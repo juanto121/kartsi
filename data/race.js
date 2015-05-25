@@ -51,4 +51,4 @@ Race.prototype.activate_power = function(mac, cb) {
 	cb(kart);
 };
 
-module.exports = Race;
+//module.exports = Race;
