@@ -1,5 +1,6 @@
-Kartsi Server
+Kartsi Server [![Build Status](https://travis-ci.org/juanto121/kartsi.svg?branch=master)](https://travis-ci.org/juanto121/kartsi)
 =============
+
 Este es el servidor que coordina varias de las tareas de kartsi.
 
 Flujo de mensajes
